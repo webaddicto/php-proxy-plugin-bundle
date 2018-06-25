@@ -1,7 +1,7 @@
 <?php
 
-function vid_player($url, $width, $height, $extension = false){
-
+function vid_player($url, $width = '100%', $height = '100%', $extension = false){
+	
 	$path = parse_url($url, PHP_URL_PATH);
 	
 	$html5 = false;
@@ -20,7 +20,7 @@ function vid_player($url, $width, $height, $extension = false){
 
 	if($html5){
 	
-		$html = '<video width="100%" height="100%" controls autoplay>
+		$html = '<video width="'.$width.'" height="'.$height.'" controls autoplay>
 			<source src="'.$video_url.'" type="video/'.$extension.'">
 			Your browser does not support the video tag.
 		</video>';
@@ -30,7 +30,7 @@ function vid_player($url, $width, $height, $extension = false){
 		// encode before embedding it into player's parameters
 		$video_url = rawurlencode($video_url);
 	
-		$html = '<object id="flowplayer" width="'.$width.'" height="'.$height.'" data="//releases.flowplayer.org/swf/flowplayer-3.2.18.swf" type="application/x-shockwave-flash">
+		$html = '<object id="flowplayer" width="'.$width.'" height="'.$height.'" data="//cdnjs.cloudflare.com/ajax/libs/flowplayer/5.4.6/flowplayer.swf" type="application/x-shockwave-flash">
  	 
        	<param name="allowfullscreen" value="true" />
 		<param name="wmode" value="transparent" />
