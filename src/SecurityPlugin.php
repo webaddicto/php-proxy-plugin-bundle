@@ -8,9 +8,17 @@ use Proxy\Proxy;
 class SecurityPlugin extends AbstractPlugin {
 
 	public function onBeforeRequest(ProxyEvent $event){
+		$request = $event['request'];
+		// Clean CF headers
+		$request->headers->remove("cf-connecting-ip");
+		$request->headers->remove("cf-ipcountry");
+		$request->headers->remove("cf-ray");
+		$request->headers->remove("cf-visitor");
+		$request->headers->remove("x-forwarded-proto");
+		$request->headers->remove("x-forwarded-for");
 
 		// Get URL and trim it (important for FILTER_VALIDATE_URL)
-		$url = trim($event['request']->getUri());
+		$url = trim($request->getUri());
 		
 		// Remove "www." from url's host, example: www.google.fr -> google.fr
 		$url_host = preg_replace('/^www\./is', '', trim(parse_url($url, PHP_URL_HOST)));
